@@ -1,5 +1,6 @@
 package com.example.track
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -45,16 +46,17 @@ class MainActivity : ComponentActivity() {
                 val y = event.values[1]
                 val z = event.values[2]
 
-                // Update the UI
-                gyroscopeXtextView.text = "X: %.2f".format(x)
-                gyroscopeYtextView.text = "Y: %.2f".format(y)
-                gyroscopeZtextView.text = "Z: %.2f".format(z)
+
+                gyroscopeXtextView.text = "Temperature: %.2f".format(x)
+                gyroscopeYtextView.text = "Humidity: %.2f".format(y)
+                gyroscopeZtextView.text = "HVAC: %.2f".format(z)
             }
         }
     }
 
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -79,6 +81,12 @@ class MainActivity : ComponentActivity() {
             sensorManager.registerListener(gyroscopeListener, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
 
+        val buttonToSecond = findViewById<Button>(R.id.button_to_second)
+        buttonToSecond.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
@@ -96,48 +104,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-//    fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-//
-//    }
-
-//    override fun onPause() {
-//        super.onPause()
-//
-//        sensorManager.unregisterListener(this)
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        gyroscope?.let {
-//            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
-//        }
-//    }
-
-
-//    private fun fetchHvacData() {
-//        val call = RetrofitClient.apiService.getHvacData()
-//
-//        call.enqueue(object : Callback<HvacData> {
-//            override fun onResponse(call: Call<HvacData>, response: Response<HvacData>) {
-//                if (response.isSuccessful) {
-//                    val hvacData = response.body()
-//                    if (hvacData != null) {
-//                        // Update the UI with fetched data
-//                        temperatureTextView.text = "Temperature: ${hvacData.temperature}"
-//                        humidityTextView.text = "Humidity: ${hvacData.humidity}"
-//                        hvacStatusTextView.text = "HVAC Status: ${hvacData.hvacStatus}"
-//                    }
-//                } else {
-//                    Toast.makeText(this@MainActivity, "Failed to retrieve data", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<HvacData>, t: Throwable) {
-//                Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
 
 }
 

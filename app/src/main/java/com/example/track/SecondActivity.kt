@@ -20,13 +20,17 @@ class SecondActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        // Find the button in the layout
-        val backButton = findViewById<Button>(R.id.backButton)
-
-        // Set an OnClickListener to navigate back to MainActivity
-        backButton.setOnClickListener {
+        val navigateButton = findViewById<Button>(R.id.navigate_button)
+        val timeButton:Button =findViewById<Button>(R.id.time_buton)
+        navigateButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)  // Navigate back to MainActivity
+            startActivity(intent)
+            finish()
+        }
+        timeButton.setOnClickListener {
+            val timeIntent = Intent(this,ThirdActivity::class.java)
+            startActivity(timeIntent)
+            finish()
         }
     }
 }
